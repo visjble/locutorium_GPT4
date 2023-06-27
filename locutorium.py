@@ -1,7 +1,7 @@
 import tkinter as tk
 import openai, time
 
-file = open("/PATH/TO/key.txt", "r") # edit here the path to your key
+file = open("/PATH/TO/key.txt", "r") # EDIT HERE THE PATH TO YOUR KEY
 
 # Read the contents of the file into a string variable
 string = file.read().rstrip()
@@ -32,6 +32,11 @@ def send_message(event=None):
     global conversation
     # Get the user's message from the input box
     user_message = user_input.get()
+    
+    # Check if the user's message is 'vale'
+    if user_message.lower() == STOP_WORD:
+        quit_chat()
+        return
 
     # Clear the input box
     user_input.delete(0, tk.END)
@@ -49,14 +54,27 @@ def send_message(event=None):
     chat_window.yview(tk.END)
 
 def quit_chat(event=None):
-    try:
-        openai.api_key.delete()
-    except AttributeError:
-        print('Suasor: VALE!')
-        time.sleep(3)
-        print('...')
-        quit()
+    global conversation
+    # Prepare the goodbye message and append it to the conversation
+    goodbye_message = {'role': 'system', 'content': 'vale'}  
+    conversation.append(goodbye_message)
+
+    # Get the chatbot's response and append it to the conversation
+    conversation = ChatGPT_conversation(conversation)
+
+    # Display the chatbot's response in the chat window
+    chat_window.configure(state=tk.NORMAL)
+    chat_window.insert(tk.END, 'Suasor: ' + conversation[-1]['content'].strip() + '\n\n')
+    chat_window.configure(state=tk.DISABLED)
+    chat_window.yview(tk.END)
+
+    # Pause the script for 3 seconds before quitting
+    time.sleep(2)
+
+    # Exit the application
     root.destroy()
+
+
 
 # Create a new tkinter window
 root = tk.Tk()
