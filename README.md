@@ -30,7 +30,7 @@ python3 locutorium.py
 
 You'll also need to provide your OpenAI API key. This should be stored in a file named Tk_key.txt in the same directory as the Python script.
 
-The chatbot will start and you can begin conversing with it. Type your message into the input box and press Enter or click the Send button to send it. The chatbot's response will appear in the chat window.
+The chatbot will start writing in Latin and you can begin conversing with it. As long as you write in latin it should continue in that language. Type your message into the input box and press Enter or click the Send button to send it. The chatbot's response will appear in the chat window.
 
 Quitting the Chat
 You can end the chat session by clicking the Quit button or closing the chat window. The word 'VALE' is used as a keyword for quitting the chat in the script.
